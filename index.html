@@ -3,23 +3,26 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Binario con Luci</title>
+  <title>TRENerd - Segnale Segreto</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <main class="page">
-    <!-- Parte superiore con immagine -->
+  <main class="page" id="page">
     <section class="top-area">
-      <img src="immagine.png" alt="Immagine principale" class="top-image" />
+      <div class="image-card">
+        <img src="immagine.png" alt="Logo TRENerd" class="top-image" />
+      </div>
     </section>
 
-    <!-- Parte inferiore con binario e luci -->
     <section class="bottom-area">
-      <div class="track-wrapper">
-        <div class="track">
+      <div class="track-scene">
+        <div class="track" aria-label="Binario con 7 luci interattive">
+
+          <!-- Rotaie -->
           <div class="rail rail-top"></div>
           <div class="rail rail-bottom"></div>
 
+          <!-- Traverse -->
           <div class="sleepers">
             <div class="sleeper"></div>
             <div class="sleeper"></div>
@@ -31,19 +34,31 @@
             <div class="sleeper"></div>
           </div>
 
-          <div class="lights">
-            <button class="light off" aria-label="Luce 1"></button>
-            <button class="light off" aria-label="Luce 2"></button>
-            <button class="light off" aria-label="Luce 3"></button>
-            <button class="light off" aria-label="Luce 4"></button>
-            <button class="light off" aria-label="Luce 5"></button>
-            <button class="light off" aria-label="Luce 6"></button>
-            <button class="light off" aria-label="Luce 7"></button>
+          <!-- Luci -->
+          <div class="lights" id="lights">
+            <button class="light off" data-index="0" aria-label="Luce 1"></button>
+            <button class="light off" data-index="1" aria-label="Luce 2"></button>
+            <button class="light off" data-index="2" aria-label="Luce 3"></button>
+            <button class="light off" data-index="3" aria-label="Luce 4"></button>
+            <button class="light off" data-index="4" aria-label="Luce 5"></button>
+            <button class="light off" data-index="5" aria-label="Luce 6"></button>
+            <button class="light off" data-index="6" aria-label="Luce 7"></button>
           </div>
+
+          <!-- Etichetta stato (facoltativa ma elegante) -->
+          <div class="binary-readout" id="binaryReadout">0000000</div>
         </div>
       </div>
     </section>
   </main>
+
+  <!-- Schermata finale -->
+  <section class="secret-screen" id="secretScreen" aria-hidden="true">
+    <div class="secret-content">
+      <div class="secret-glow"></div>
+      <h1>SEGRETO</h1>
+    </div>
+  </section>
 
   <script src="app.js"></script>
 </body>
