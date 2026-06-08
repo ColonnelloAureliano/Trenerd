@@ -1,15 +1,18 @@
 :root {
   --bg: #ffffff;
   --deep: #0f2730;
-  --deep-2: #193844;
-  --deep-3: #08161c;
   --green: #39c85a;
-  --green-2: #71f091;
+  --green-2: #7bf19b;
   --green-dark: #1f8e43;
-  --metal-1: #e8eef1;
-  --metal-2: #bcc8cf;
-  --metal-3: #7e909a;
+
+  --metal-1: #eef3f5;
+  --metal-2: #c2cdd3;
+  --metal-3: #8697a1;
   --metal-4: #5f7079;
+
+  --sleeper-1: #28414b;
+  --sleeper-2: #1b3139;
+  --sleeper-3: #10252d;
 }
 
 * {
@@ -45,7 +48,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 26px 20px 8px;
+  padding: 26px 20px 10px;
 }
 
 .image-card {
@@ -70,9 +73,9 @@ body {
   background: linear-gradient(
     90deg,
     transparent 0%,
-    rgba(57, 200, 90, 0.22) 25%,
-    rgba(57, 200, 90, 0.32) 50%,
-    rgba(57, 200, 90, 0.22) 75%,
+    rgba(57, 200, 90, 0.20) 25%,
+    rgba(57, 200, 90, 0.30) 50%,
+    rgba(57, 200, 90, 0.20) 75%,
     transparent 100%
   );
   filter: blur(6px);
@@ -94,12 +97,11 @@ body {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 6px 20px 40px;
+  padding: 8px 20px 40px;
 }
 
 .track-scene {
   width: min(980px, 94vw);
-  position: relative;
 }
 
 .track {
@@ -110,13 +112,33 @@ body {
 }
 
 /* =========================
+   GEOMETRIA PRINCIPALE
+   ========================= */
+/*
+  Rotaie:
+  - top rail: 78 -> 90
+  - bottom rail: 146 -> 158
+
+  Centro luce:
+  - metà esatta tra i centri delle rotaie:
+    (84 + 152) / 2 = 118
+
+  Traverse:
+  - le faccio sporgere in modo simmetrico:
+    top 62, height 112 => bottom 174
+    quindi sporgenza:
+    sopra la rotaia alta = 78 - 62 = 16
+    sotto la rotaia bassa = 174 - 158 = 16
+*/
+
+/* =========================
    TRAVERSE
    ========================= */
 .sleepers {
   position: absolute;
   left: 5%;
   width: 90%;
-  top: 56px;
+  top: 62px;
   height: 112px;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
@@ -132,14 +154,13 @@ body {
   background:
     linear-gradient(
       180deg,
-      #29414b 0%,
-      #223740 35%,
-      #173039 72%,
-      #10252d 100%
+      var(--sleeper-1) 0%,
+      var(--sleeper-2) 40%,
+      var(--sleeper-3) 100%
     );
   box-shadow:
-    inset 0 2px 2px rgba(255, 255, 255, 0.08),
-    inset 0 -2px 4px rgba(0, 0, 0, 0.24),
+    inset 0 2px 2px rgba(255,255,255,0.08),
+    inset 0 -2px 4px rgba(0,0,0,0.24),
     0 4px 10px rgba(15, 39, 48, 0.16);
   position: relative;
 }
@@ -152,7 +173,7 @@ body {
   right: 4px;
   height: 2px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255,255,255,0.08);
 }
 
 .sleeper::before {
@@ -179,7 +200,7 @@ body {
       var(--metal-1) 0%,
       var(--metal-2) 18%,
       var(--metal-3) 44%,
-      #d9e2e7 60%,
+      #dce4e8 60%,
       #8597a1 82%,
       var(--metal-4) 100%
     );
@@ -218,8 +239,6 @@ body {
 
 /* =========================
    LUCI
-   - centrate orizzontalmente tra le traverse
-   - centrate verticalmente tra le rotaie
    ========================= */
 .lights {
   position: absolute;
@@ -229,8 +248,8 @@ body {
   left: calc(5% + (90% / 16));
   width: calc(90% * 7 / 8);
 
-  /* CENTRATURA VERTICALE ESATTA TRA LE DUE ROTAIE */
-  top: calc((78px + 146px) / 2 + 6px);
+  /* CENTRO ESATTO TRA LE DUE ROTAIE */
+  top: 118px;
   transform: translateY(-50%);
 
   display: grid;
@@ -238,70 +257,58 @@ body {
   align-items: center;
 }
 
+/*
+  IMPORTANTE:
+  - niente ::before metallico sul bottone
+  - la ghiera la faccio con box-shadow fisso
+  - così il browser non può applicare effetti strani all'ultimo toccato
+*/
 .light {
   justify-self: center;
-  width: 42px;
-  height: 42px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   cursor: pointer;
+
   appearance: none;
   -webkit-appearance: none;
+  -moz-appearance: none;
+
+  border: 0 !important;
+  outline: none !important;
+  background-clip: padding-box;
+  padding: 0;
+  margin: 0;
+
+  position: relative;
+  box-sizing: border-box;
+
   -webkit-tap-highlight-color: transparent;
   tap-highlight-color: transparent;
-  border: none;
-  outline: none !important;
-  box-sizing: border-box;
-  position: relative;
+  user-select: none;
+
   transition:
     transform 0.14s ease,
     box-shadow 0.20s ease,
     background 0.20s ease;
 }
 
-/* NESSUN CONTORNO SPECIALE SU FOCUS / TAP / ULTIMO TOCCATO */
+/* Firefox inner border */
+.light::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
 .light:focus,
 .light:focus-visible,
+.light:focus-within,
 .light:active {
   outline: none !important;
-}
-
-/* solo ghiera esterna fissa, uguale per tutte */
-.light::before {
-  content: "";
-  position: absolute;
-  inset: -5px;
-  border-radius: 50%;
-  background:
-    linear-gradient(
-      180deg,
-      #f3f7f9 0%,
-      #c8d2d8 24%,
-      #93a4ae 52%,
-      #dce4e8 72%,
-      #788993 100%
-    );
-  box-shadow:
-    inset 0 1px 1px rgba(255,255,255,0.9),
-    inset 0 -1px 2px rgba(0,0,0,0.25),
-    0 2px 5px rgba(15, 39, 48, 0.14);
-  z-index: -1;
-  pointer-events: none;
-}
-
-/* alone solo quando accesa */
-.light::after {
-  content: "";
-  position: absolute;
-  inset: -13px;
-  border-radius: 50%;
-  opacity: 0;
-  z-index: -2;
-  transition: opacity 0.18s ease;
-  pointer-events: none;
+  box-shadow: none;
 }
 
 .light:hover {
-  transform: scale(1.06);
+  transform: scale(1.05);
 }
 
 /* SPENTA */
@@ -309,6 +316,10 @@ body {
   background:
     radial-gradient(circle at 35% 35%, #2c3940 0%, #121e24 48%, #050b0e 100%);
   box-shadow:
+    /* ghiera esterna uguale per tutte */
+    0 0 0 5px #b9c5cc,
+    0 0 0 6px #73858f,
+    /* shading interno */
     inset 0 1px 2px rgba(255,255,255,0.06),
     inset 0 -2px 4px rgba(0,0,0,0.5);
 }
@@ -316,22 +327,16 @@ body {
 /* ACCESA */
 .light.on {
   background:
-    radial-gradient(circle at 35% 35%, #c8ffd2 0%, #79f39a 26%, #39c85a 58%, #1f8e43 100%);
+    radial-gradient(circle at 35% 35%, #d4ffdc 0%, var(--green-2) 26%, var(--green) 58%, var(--green-dark) 100%);
   box-shadow:
+    /* ghiera esterna uguale per tutte */
+    0 0 0 5px #b9c5cc,
+    0 0 0 6px #73858f,
+    /* luce */
     inset 0 1px 2px rgba(255,255,255,0.35),
     inset 0 -2px 3px rgba(0,0,0,0.16),
-    0 0 12px rgba(57, 200, 90, 0.60),
-    0 0 22px rgba(57, 200, 90, 0.34);
-}
-
-.light.on::after {
-  opacity: 1;
-  background: radial-gradient(
-    circle,
-    rgba(57, 200, 90, 0.34) 0%,
-    rgba(57, 200, 90, 0.10) 45%,
-    rgba(57, 200, 90, 0) 72%
-  );
+    0 0 12px rgba(57, 200, 90, 0.56),
+    0 0 22px rgba(57, 200, 90, 0.30);
 }
 
 /* =========================
@@ -404,7 +409,7 @@ body.unlocked .page {
   }
 
   .sleepers {
-    top: 54px;
+    top: 58px;
     height: 102px;
   }
 
@@ -421,13 +426,36 @@ body.unlocked .page {
     top: 136px;
   }
 
+  /* simmetria traverse:
+     sopra = 74 - 58 = 16
+     sotto = (58+102) - (136+12) = 160 - 148 = 12
+     aggiusto leggermente aumentando top e tenendo risultato visivo migliore
+  */
   .lights {
-    top: calc((74px + 136px) / 2 + 5px);
+    top: 111px; /* centro tra 80 e 142 circa */
   }
 
   .light {
     width: 36px;
     height: 36px;
+  }
+
+  .light.off {
+    box-shadow:
+      0 0 0 4px #b9c5cc,
+      0 0 0 5px #73858f,
+      inset 0 1px 2px rgba(255,255,255,0.06),
+      inset 0 -2px 4px rgba(0,0,0,0.5);
+  }
+
+  .light.on {
+    box-shadow:
+      0 0 0 4px #b9c5cc,
+      0 0 0 5px #73858f,
+      inset 0 1px 2px rgba(255,255,255,0.35),
+      inset 0 -2px 3px rgba(0,0,0,0.16),
+      0 0 10px rgba(57, 200, 90, 0.56),
+      0 0 18px rgba(57, 200, 90, 0.28);
   }
 }
 
@@ -437,7 +465,7 @@ body.unlocked .page {
   }
 
   .sleepers {
-    top: 48px;
+    top: 52px;
     height: 92px;
   }
 
@@ -460,7 +488,7 @@ body.unlocked .page {
   }
 
   .lights {
-    top: calc((66px + 122px) / 2 + 5px);
+    top: 99px;
   }
 
   .light {
@@ -468,8 +496,21 @@ body.unlocked .page {
     height: 30px;
   }
 
-  .light::before {
-    inset: -4px;
+  .light.off {
+    box-shadow:
+      0 0 0 4px #b9c5cc,
+      0 0 0 5px #73858f,
+      inset 0 1px 2px rgba(255,255,255,0.06),
+      inset 0 -2px 4px rgba(0,0,0,0.5);
+  }
+
+  .light.on {
+    box-shadow:
+      0 0 0 4px #b9c5cc,
+      0 0 0 5px #73858f,
+      inset 0 1px 2px rgba(255,255,255,0.35),
+      inset 0 -2px 3px rgba(0,0,0,0.16),
+      0 0 8px rgba(57, 200, 90, 0.52),
+      0 0 14px rgba(57, 200, 90, 0.26);
   }
 }
-
