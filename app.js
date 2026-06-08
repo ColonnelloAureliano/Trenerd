@@ -29,6 +29,8 @@ lights.forEach((light) => {
     light.classList.toggle("on");
     light.classList.toggle("off");
 
+    light.blur(); // rimuove immediatamente il focus visivo dopo il tap/click
+
     checkSecret();
   });
 });
