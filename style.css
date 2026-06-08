@@ -1,0 +1,186 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  font-family: Arial, sans-serif;
+  background: #ffffff;
+}
+
+body {
+  display: flex;
+  justify-content: center;
+}
+
+.page {
+  width: 100%;
+  max-width: 1000px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+}
+
+/* PARTE ALTA */
+.top-area {
+  height: 50vh;
+  min-height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.top-image {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+/* PARTE BASSA */
+.bottom-area {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 20px 20px 40px;
+}
+
+.track-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.track {
+  position: relative;
+  width: min(90vw, 900px);
+  height: 180px;
+}
+
+/* Rotaie orizzontali */
+.rail {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  background: #666666;
+  border-radius: 999px;
+}
+
+.rail-top {
+  top: 58px;
+}
+
+.rail-bottom {
+  top: 122px;
+}
+
+/* Traverse verticali */
+.sleepers {
+  position: absolute;
+  inset: 34px 0 34px 0;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  align-items: stretch;
+  z-index: 1;
+}
+
+.sleeper {
+  justify-self: center;
+  width: 16px;
+  height: 112px;
+  background: #8b5a2b;
+  border-radius: 4px;
+}
+
+/* Luci nei 7 spazi */
+.lights {
+  position: absolute;
+  left: 6.25%;
+  width: 87.5%;
+  top: 90px;
+  transform: translateY(-50%);
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  align-items: center;
+  z-index: 3;
+}
+
+.light {
+  justify-self: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 2px solid #222222;
+  cursor: pointer;
+  transition: transform 0.12s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+}
+
+.light:hover {
+  transform: scale(1.08);
+}
+
+.light:active {
+  transform: scale(0.96);
+}
+
+.light.off {
+  background: #111111;
+  box-shadow: inset 0 0 6px rgba(255,255,255,0.08);
+}
+
+.light.on {
+  background: #00c853;
+  box-shadow:
+    0 0 8px rgba(0, 200, 83, 0.65),
+    0 0 18px rgba(0, 200, 83, 0.45),
+    inset 0 0 4px rgba(255,255,255,0.45);
+}
+
+/* Mobile */
+@media (max-width: 700px) {
+  .top-area {
+    height: 42vh;
+    min-height: 220px;
+    padding: 16px;
+  }
+
+  .track {
+    height: 150px;
+  }
+
+  .rail-top {
+    top: 45px;
+  }
+
+  .rail-bottom {
+    top: 101px;
+  }
+
+  .sleepers {
+    inset: 24px 0 24px 0;
+  }
+
+  .sleeper {
+    width: 12px;
+    height: 98px;
+  }
+
+  .lights {
+    top: 73px;
+  }
+
+  .light {
+    width: 28px;
+    height: 28px;
+  }
+}
