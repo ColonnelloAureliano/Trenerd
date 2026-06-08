@@ -10,8 +10,6 @@
   --metal-2: #bcc8cf;
   --metal-3: #7e909a;
   --metal-4: #5f7079;
-  --sleeper-1: #223740;
-  --sleeper-2: #13242c;
 }
 
 * {
@@ -113,14 +111,13 @@ body {
 
 /* =========================
    TRAVERSE
-   8 traverse equidistanti
    ========================= */
 .sleepers {
   position: absolute;
   left: 5%;
   width: 90%;
   top: 56px;
-  height: 116px;
+  height: 112px;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
   align-items: center;
@@ -167,7 +164,7 @@ body {
 }
 
 /* =========================
-   ROTAIE REALISTICHE
+   ROTAIE
    ========================= */
 .rail {
   position: absolute;
@@ -221,16 +218,21 @@ body {
 
 /* =========================
    LUCI
-   7 luci, centrate perfettamente
-   nei 7 spazi fra 8 traverse
+   - centrate orizzontalmente tra le traverse
+   - centrate verticalmente tra le rotaie
    ========================= */
 .lights {
   position: absolute;
   z-index: 5;
-  top: 112px;
+
+  /* centro dei 7 spazi fra 8 traverse */
   left: calc(5% + (90% / 16));
   width: calc(90% * 7 / 8);
+
+  /* CENTRATURA VERTICALE ESATTA TRA LE DUE ROTAIE */
+  top: calc((78px + 146px) / 2 + 6px);
   transform: translateY(-50%);
+
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   align-items: center;
@@ -244,8 +246,11 @@ body {
   cursor: pointer;
   appearance: none;
   -webkit-appearance: none;
+  -webkit-tap-highlight-color: transparent;
+  tap-highlight-color: transparent;
   border: none;
-  outline: none;
+  outline: none !important;
+  box-sizing: border-box;
   position: relative;
   transition:
     transform 0.14s ease,
@@ -253,7 +258,14 @@ body {
     background 0.20s ease;
 }
 
-/* solo ghiera esterna metallica */
+/* NESSUN CONTORNO SPECIALE SU FOCUS / TAP / ULTIMO TOCCATO */
+.light:focus,
+.light:focus-visible,
+.light:active {
+  outline: none !important;
+}
+
+/* solo ghiera esterna fissa, uguale per tutte */
 .light::before {
   content: "";
   position: absolute;
@@ -273,9 +285,10 @@ body {
     inset 0 -1px 2px rgba(0,0,0,0.25),
     0 2px 5px rgba(15, 39, 48, 0.14);
   z-index: -1;
+  pointer-events: none;
 }
 
-/* alone solo per stato acceso */
+/* alone solo quando accesa */
 .light::after {
   content: "";
   position: absolute;
@@ -284,17 +297,14 @@ body {
   opacity: 0;
   z-index: -2;
   transition: opacity 0.18s ease;
+  pointer-events: none;
 }
 
 .light:hover {
   transform: scale(1.06);
 }
 
-.light:active {
-  transform: scale(0.97);
-}
-
-/* SPENTA: nera, molto leggibile */
+/* SPENTA */
 .light.off {
   background:
     radial-gradient(circle at 35% 35%, #2c3940 0%, #121e24 48%, #050b0e 100%);
@@ -303,7 +313,7 @@ body {
     inset 0 -2px 4px rgba(0,0,0,0.5);
 }
 
-/* ACCESA: verde, molto leggibile */
+/* ACCESA */
 .light.on {
   background:
     radial-gradient(circle at 35% 35%, #c8ffd2 0%, #79f39a 26%, #39c85a 58%, #1f8e43 100%);
@@ -395,7 +405,7 @@ body.unlocked .page {
 
   .sleepers {
     top: 54px;
-    height: 106px;
+    height: 102px;
   }
 
   .sleeper {
@@ -412,7 +422,7 @@ body.unlocked .page {
   }
 
   .lights {
-    top: 104px;
+    top: calc((74px + 136px) / 2 + 5px);
   }
 
   .light {
@@ -428,7 +438,7 @@ body.unlocked .page {
 
   .sleepers {
     top: 48px;
-    height: 96px;
+    height: 92px;
   }
 
   .sleeper {
@@ -450,7 +460,7 @@ body.unlocked .page {
   }
 
   .lights {
-    top: 94px;
+    top: calc((66px + 122px) / 2 + 5px);
   }
 
   .light {
@@ -462,3 +472,4 @@ body.unlocked .page {
     inset: -4px;
   }
 }
+
