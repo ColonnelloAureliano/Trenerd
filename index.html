@@ -18,10 +18,6 @@
       <div class="track-scene">
         <div class="track" aria-label="Binario con 7 luci interattive">
 
-          <!-- Rotaie -->
-          <div class="rail rail-top"></div>
-          <div class="rail rail-bottom"></div>
-
           <!-- Traverse -->
           <div class="sleepers">
             <div class="sleeper"></div>
@@ -34,25 +30,26 @@
             <div class="sleeper"></div>
           </div>
 
+          <!-- Rotaie -->
+          <div class="rail rail-top"></div>
+          <div class="rail rail-bottom"></div>
+
           <!-- Luci -->
           <div class="lights" id="lights">
-            <button class="light off" data-index="0" aria-label="Luce 1"></button>
-            <button class="light off" data-index="1" aria-label="Luce 2"></button>
-            <button class="light off" data-index="2" aria-label="Luce 3"></button>
-            <button class="light off" data-index="3" aria-label="Luce 4"></button>
-            <button class="light off" data-index="4" aria-label="Luce 5"></button>
-            <button class="light off" data-index="5" aria-label="Luce 6"></button>
-            <button class="light off" data-index="6" aria-label="Luce 7"></button>
+            <button class="light off" aria-label="Luce 1"></button>
+            <button class="light off" aria-label="Luce 2"></button>
+            <button class="light off" aria-label="Luce 3"></button>
+            <button class="light off" aria-label="Luce 4"></button>
+            <button class="light off" aria-label="Luce 5"></button>
+            <button class="light off" aria-label="Luce 6"></button>
+            <button class="light off" aria-label="Luce 7"></button>
           </div>
 
-          <!-- Etichetta stato (facoltativa ma elegante) -->
-          <div class="binary-readout" id="binaryReadout">0000000</div>
         </div>
       </div>
     </section>
   </main>
 
-  <!-- Schermata finale -->
   <section class="secret-screen" id="secretScreen" aria-hidden="true">
     <div class="secret-content">
       <div class="secret-glow"></div>
@@ -63,3 +60,4 @@
   <script src="app.js"></script>
 </body>
 </html>
+
