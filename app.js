@@ -1,7 +1,6 @@
 const TARGET = "1100111";
 
 const lights = Array.from(document.querySelectorAll(".light"));
-const binaryReadout = document.getElementById("binaryReadout");
 const secretScreen = document.getElementById("secretScreen");
 
 function getCurrentBinary() {
@@ -10,20 +9,16 @@ function getCurrentBinary() {
     .join("");
 }
 
-function updateReadout() {
+function checkSecret() {
   const current = getCurrentBinary();
-  binaryReadout.textContent = current;
-  checkSecret(current);
-}
 
-function checkSecret(current) {
   if (current === TARGET) {
     document.body.classList.add("unlocked");
 
     setTimeout(() => {
       secretScreen.classList.add("show");
       secretScreen.setAttribute("aria-hidden", "false");
-    }, 350);
+    }, 320);
   }
 }
 
@@ -34,9 +29,7 @@ lights.forEach((light) => {
     light.classList.toggle("on");
     light.classList.toggle("off");
 
-    updateReadout();
+    checkSecret();
   });
 });
 
-// Stato iniziale
-updateReadout();
