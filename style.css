@@ -113,23 +113,15 @@ body {
 
 /* =========================
    GEOMETRIA PRINCIPALE
+   Desktop:
+   - rail top: 78 -> 90
+   - rail bottom: 146 -> 158
+   - centro luci: 118
+   - traverse simmetriche:
+     top 62, height 112 => bottom 174
+     sporgenza sopra = 16
+     sporgenza sotto = 16
    ========================= */
-/*
-  Rotaie:
-  - top rail: 78 -> 90
-  - bottom rail: 146 -> 158
-
-  Centro luce:
-  - metà esatta tra i centri delle rotaie:
-    (84 + 152) / 2 = 118
-
-  Traverse:
-  - le faccio sporgere in modo simmetrico:
-    top 62, height 112 => bottom 174
-    quindi sporgenza:
-    sopra la rotaia alta = 78 - 62 = 16
-    sotto la rotaia bassa = 174 - 158 = 16
-*/
 
 /* =========================
    TRAVERSE
@@ -239,16 +231,19 @@ body {
 
 /* =========================
    LUCI
+   - centrate nei 7 spazi
+   - più piccole
+   - non si sovrappongono alle traverse
    ========================= */
 .lights {
   position: absolute;
   z-index: 5;
 
-  /* centro dei 7 spazi fra 8 traverse */
+  /* centro dei 7 spazi tra 8 traverse */
   left: calc(5% + (90% / 16));
   width: calc(90% * 7 / 8);
 
-  /* CENTRO ESATTO TRA LE DUE ROTAIE */
+  /* centro esatto tra le due rotaie */
   top: 118px;
   transform: translateY(-50%);
 
@@ -257,16 +252,10 @@ body {
   align-items: center;
 }
 
-/*
-  IMPORTANTE:
-  - niente ::before metallico sul bottone
-  - la ghiera la faccio con box-shadow fisso
-  - così il browser non può applicare effetti strani all'ultimo toccato
-*/
 .light {
   justify-self: center;
-  width: 40px;
-  height: 40px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   cursor: pointer;
 
@@ -293,7 +282,6 @@ body {
     background 0.20s ease;
 }
 
-/* Firefox inner border */
 .light::-moz-focus-inner {
   border: 0;
   padding: 0;
@@ -304,7 +292,6 @@ body {
 .light:focus-within,
 .light:active {
   outline: none !important;
-  box-shadow: none;
 }
 
 .light:hover {
@@ -316,10 +303,8 @@ body {
   background:
     radial-gradient(circle at 35% 35%, #2c3940 0%, #121e24 48%, #050b0e 100%);
   box-shadow:
-    /* ghiera esterna uguale per tutte */
-    0 0 0 5px #b9c5cc,
-    0 0 0 6px #73858f,
-    /* shading interno */
+    0 0 0 4px #b9c5cc,
+    0 0 0 5px #73858f,
     inset 0 1px 2px rgba(255,255,255,0.06),
     inset 0 -2px 4px rgba(0,0,0,0.5);
 }
@@ -329,14 +314,12 @@ body {
   background:
     radial-gradient(circle at 35% 35%, #d4ffdc 0%, var(--green-2) 26%, var(--green) 58%, var(--green-dark) 100%);
   box-shadow:
-    /* ghiera esterna uguale per tutte */
-    0 0 0 5px #b9c5cc,
-    0 0 0 6px #73858f,
-    /* luce */
+    0 0 0 4px #b9c5cc,
+    0 0 0 5px #73858f,
     inset 0 1px 2px rgba(255,255,255,0.35),
     inset 0 -2px 3px rgba(0,0,0,0.16),
-    0 0 12px rgba(57, 200, 90, 0.56),
-    0 0 22px rgba(57, 200, 90, 0.30);
+    0 0 10px rgba(57, 200, 90, 0.56),
+    0 0 18px rgba(57, 200, 90, 0.30);
 }
 
 /* =========================
@@ -392,7 +375,7 @@ body.unlocked .page {
 }
 
 /* =========================
-   RESPONSIVE
+   TABLET
    ========================= */
 @media (max-width: 800px) {
   .top-area {
@@ -408,87 +391,27 @@ body.unlocked .page {
     height: 210px;
   }
 
+  /* geometria simmetrica anche qui */
   .sleepers {
-    top: 58px;
-    height: 102px;
+    top: 55px;
+    height: 100px;
   }
 
   .sleeper {
     width: 18px;
-    height: 102px;
+    height: 100px;
   }
 
   .rail-top {
-    top: 74px;
+    top: 71px;
   }
 
   .rail-bottom {
-    top: 136px;
-  }
-
-  /* simmetria traverse:
-     sopra = 74 - 58 = 16
-     sotto = (58+102) - (136+12) = 160 - 148 = 12
-     aggiusto leggermente aumentando top e tenendo risultato visivo migliore
-  */
-  .lights {
-    top: 111px; /* centro tra 80 e 142 circa */
-  }
-
-  .light {
-    width: 36px;
-    height: 36px;
-  }
-
-  .light.off {
-    box-shadow:
-      0 0 0 4px #b9c5cc,
-      0 0 0 5px #73858f,
-      inset 0 1px 2px rgba(255,255,255,0.06),
-      inset 0 -2px 4px rgba(0,0,0,0.5);
-  }
-
-  .light.on {
-    box-shadow:
-      0 0 0 4px #b9c5cc,
-      0 0 0 5px #73858f,
-      inset 0 1px 2px rgba(255,255,255,0.35),
-      inset 0 -2px 3px rgba(0,0,0,0.16),
-      0 0 10px rgba(57, 200, 90, 0.56),
-      0 0 18px rgba(57, 200, 90, 0.28);
-  }
-}
-
-@media (max-width: 520px) {
-  .track {
-    height: 190px;
-  }
-
-  .sleepers {
-    top: 52px;
-    height: 92px;
-  }
-
-  .sleeper {
-    width: 14px;
-    height: 92px;
-    border-radius: 6px;
-  }
-
-  .rail {
-    height: 10px;
-  }
-
-  .rail-top {
-    top: 66px;
-  }
-
-  .rail-bottom {
-    top: 122px;
+    top: 139px;
   }
 
   .lights {
-    top: 99px;
+    top: 111px;
   }
 
   .light {
@@ -498,19 +421,79 @@ body.unlocked .page {
 
   .light.off {
     box-shadow:
-      0 0 0 4px #b9c5cc,
-      0 0 0 5px #73858f,
+      0 0 0 3px #b9c5cc,
+      0 0 0 4px #73858f,
       inset 0 1px 2px rgba(255,255,255,0.06),
       inset 0 -2px 4px rgba(0,0,0,0.5);
   }
 
   .light.on {
     box-shadow:
-      0 0 0 4px #b9c5cc,
-      0 0 0 5px #73858f,
+      0 0 0 3px #b9c5cc,
+      0 0 0 4px #73858f,
       inset 0 1px 2px rgba(255,255,255,0.35),
       inset 0 -2px 3px rgba(0,0,0,0.16),
-      0 0 8px rgba(57, 200, 90, 0.52),
-      0 0 14px rgba(57, 200, 90, 0.26);
+      0 0 9px rgba(57, 200, 90, 0.56),
+      0 0 16px rgba(57, 200, 90, 0.28);
+  }
+}
+
+/* =========================
+   MOBILE
+   ========================= */
+@media (max-width: 520px) {
+  .track {
+    height: 190px;
+  }
+
+  /* simmetria anche su mobile */
+  .sleepers {
+    top: 53px;
+    height: 88px;
+  }
+
+  .sleeper {
+    width: 14px;
+    height: 88px;
+    border-radius: 6px;
+  }
+
+  .rail {
+    height: 10px;
+  }
+
+  .rail-top {
+    top: 67px;
+  }
+
+  .rail-bottom {
+    top: 121px;
+  }
+
+  .lights {
+    top: 99px;
+  }
+
+  .light {
+    width: 26px;
+    height: 26px;
+  }
+
+  .light.off {
+    box-shadow:
+      0 0 0 3px #b9c5cc,
+      0 0 0 4px #73858f,
+      inset 0 1px 2px rgba(255,255,255,0.06),
+      inset 0 -2px 4px rgba(0,0,0,0.5);
+  }
+
+  .light.on {
+    box-shadow:
+      0 0 0 3px #b9c5cc,
+      0 0 0 4px #73858f,
+      inset 0 1px 2px rgba(255,255,255,0.35),
+      inset 0 -2px 3px rgba(0,0,0,0.16),
+      0 0 7px rgba(57, 200, 90, 0.52),
+      0 0 12px rgba(57, 200, 90, 0.26);
   }
 }
